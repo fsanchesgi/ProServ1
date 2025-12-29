@@ -48,7 +48,12 @@ export default function Layout({ children, currentPageName }) {
     { name: 'Planos', icon: Crown, page: 'Planos', planos: ['gratuito', 'basico', 'premium'] },
   ];
 
-  const filteredMenuItems = menuItems.filter(item => item.planos.includes(plano));
+  // Adicionar menu Admin se for admin
+  const allMenuItems = user?.role === 'admin' 
+    ? [...menuItems, { name: 'Admin', icon: Settings, page: 'Admin', planos: ['gratuito', 'basico', 'premium'] }]
+    : menuItems;
+
+  const filteredMenuItems = allMenuItems.filter(item => item.planos.includes(plano));
 
   const planoBadge = {
     gratuito: { label: 'Gratuito', color: 'bg-slate-500' },
